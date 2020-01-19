@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How To Configure MAMP</title>
+</head>
+<style>
+body {width: 90%;margin: 1em auto;background: #ececec;font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";line-height: 1.5;}
+#grid{display: grid;grid-template-columns: 1fr;}
+@media screen and (min-width: 700px) {#grid {grid-template-columns: 1fr 1fr;}}
+.step {background: #fff;margin: 1em; padding: 1em;border: 1px solid gray;}
+code {background: #efefef; padding: .2em .5em .2em .5em;}
+h1{text-align:center;}
+h3 {margin-bottom: 0; padding-bottom: 0;}
+p:first-child {padding-top: 0;margin-top:0;}
+img {width: 100%; height: auto;}
+</style>
+<body>
+  <h1>How To Configure MAMP</h1>
+  <section id="grid">
+    <div class="step">
+      <h3>Getting Started</h3>
+      <p>MAMP is a bundle of software (including Apache, MySQL, and PHP) that allows you to create a local development environment. That is, it turns your desktop into development server.</p>
+      <p>This guide will walk you through the process of installing MAMP and configuring it enough to display a simple website.</p>
+      <h3>1. Install MAMP</h3>
+      <p>Visit <a href="https://www.mamp.info/en/downloads/">this page</a> and download the package for your OS. Then, double-click the .pkg file and follow the prompts for installation.</p>
+      <p>Once that's finished, start the MAMP app by double-clicking its icon.</p>
+    </div>
+    <div class="step">
+      <h3>2. Start the Servers and Load a Page</h3>
+      <p>Click the "Start Servers" button on the MAMP dashboard and then click the 'Open Webstart Page' button. This should open <code>localhost:8888/MAMP</code> in your web browser, displaying a welcome page and useful links. You'll notice the lights on the MAMP dashboard for Apache and MySQL servers have changed to green.</p>
+      <p><strong>Note: </strong>Once MAMP is installed, it creates a webroot directory at <code>/Applications/MAMP/htdocs</code>. Any files you put in this folder will be available to your browser at <code>localhost:8888</code></p>
+    </div>
+    <div class="step">
+      <h3>3. Locate Important Files</h3>
+      <p>The apache server configuration files are located at <code>MAMP/conf/apache/httpd.conf/</code>. These contain all the directives Apache uses to run the server.</p>
+      <p>Malicious PHP scripts are often used by hackers to compromise a server. You can harden your PHP settings by configuring the PHP Initialization file located at <code>MAMP/conf/your-php-version/php.ini</code>. </p>
+      <p>You can Google "Harden PHP" to find more information and to learn what settings to change.</p>
+    </div>
+    <div class="step">
+      <h3>4. Create a MySQL Database</h3>
+      <p>Databases and users will be controlled using phpMyAdmin. Visit <code>localhost:8888/phpMyAdmin</code> in your browser.</p>
+      <p>Click on "Databases" in the nav menu and then type in a database name and select "utf8_general_ci" as the collation type.</p>
+      <p>You should see that a database with no tables was created in the side-panel.</p>
+    </div>
+    <div class="step">
+      <h3>5. Create a Database User</h3>
+      <p>Click on the server link to go back, and then click on "User Accounts in the nav menu".</p>
+      <p>Under the "New" heading, click "Add user account." Then, type in a username and a passsword (twice). <strong>Leave everything else unchecked</strong>.</p>
+      <p>At the bottom of the page, click "Go" to submit the commands.</p>
+    </div>
+    <div class="step">
+      <h3>6. Give the User Privileges</h3>
+      <p>From the "User Accounts" section, click on the "Edit Privileges" link next to the user whose permissions you want to edit.</p>
+      <p>In the sub-nav below the nav menu, click "Database". Then, select the database you just created and click "Go".</p>
+      <p>In the "Database-Specific Privileges", check all and click "Go".</p>
+      <p><strong>Note</strong>: When you click the "Go" button, you'll notice a small, color-coded readout appears at the top of the page. This readout contains a status message as well as the complete SQL commands issued by your actions.</p>
+    </div>
+    <div class="step">
+        <h3>7. Add Files to the Webroot</h3>
+        <p>Create an index.html file containing "Hello, World" to test browser display and add a CSS call to test that your files paths are working. Put both files in the <code>/htdocs</code> directory.</p>
+        <p>Your index file should contain the following code:</p>
+        <code style="background:transparent;">
+          &lt;!DOCTYPE html&gt;<br>
+          &lt;html lang="en"&gt;<br>
+          &nbsp;&lt;head&gt;<br>
+          &nbsp;&nbsp;&lt;meta charset="utf-8"&gt;<br>
+          &nbsp;&nbsp;&lt;link rel="stylesheet" href="style.css"&gt;<br>
+          &nbsp;&lt;/head&gt;<br>
+          &nbsp;&lt;body&gt;<br>
+          &nbsp;&nbsp;&lt;h1&gt;Hello, World!&lt;/h1&gt;<br>
+          &nbsp;&lt;/body&gt;<br>
+          &lt;/html&gt;
+        </code>
+    </div>
+    <div class="step">
+        <h3>8. Secure the Files</h3>
+        <p>Open up your command line and navigate to the root directory. On my local machine, the command looks like this (but yours may differ):</p>
+        <code>$ cd ../../Applications/MAMP/htdocs</code>
+        <p>Now, view the permissions of the files you just created.</p>
+        <code>$ ls -al</code>
+        <p>Notice your files have the permissions of 644. Go ahead and load up the page in your browser (by visiting <code>localhosst:8888</code>). Now, remove all permissions from the index file.</p>
+        <code>$ sudo chmod 000 index.html</code>
+        <p>Try to reload the page in your browser. What happened? You better change it back to 644!</p>
+    </div>
+  </section>
+</body>
+</html>
